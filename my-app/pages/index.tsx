@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Web3Modal from "web3Modal";
 import { providers, Contract } from "ethers";
@@ -32,8 +33,8 @@ export default function Home() {
   const getProviderOrSigner = async (needSigner = false) => {
     // Connect to Metamask
     // Since we store `web3Modal` as a reference, we need to access the `current` value to get access to the underlying object
-    const provider = await web3ModalRef.current.connect();
-    const web3Provider = new providers.Web3Provider(provider);
+    const instance = await web3ModalRef?.current?.connect();
+    const web3Provider = new ethers.providers.Web3Provider(instance);
 
     // If user is not connected to the Goerli network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
@@ -209,7 +210,7 @@ export default function Home() {
           {renderButton()}
         </div>
         <div>
-          <img className={styles.image} src="./crypto-devs.svg" />
+          <Image className={styles.image} src="./crypto-devs.svg" />
         </div>
       </div>
 
